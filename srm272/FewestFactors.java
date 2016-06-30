@@ -14,7 +14,6 @@ public class FewestFactors {
       TreeMap<Integer, List<Integer>> results = new TreeMap<>();
       for (int made : poss) {
         int factCount = facts.get(made).size();
-        //System.err.println("found a possible: " + made + " with num factors: " + factCount); // DEBUG
         List<Integer> lis = results.get(factCount);
         if (lis == null) lis = new ArrayList<>();
         lis.add(made);
@@ -30,7 +29,6 @@ public class FewestFactors {
     TreeSet<Integer> set = new TreeSet<Integer>(Collections.reverseOrder());
     for (String s : l) {
       set.add(Integer.parseInt(s));
-      //System.out.println("Got str: " + s); // DEBUG
     }
     return set;
   }
