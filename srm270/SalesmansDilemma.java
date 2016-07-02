@@ -37,13 +37,13 @@ public class SalesmansDilemma {
     }
   }
   public class Step {
-    public int current;
+    public int profitAtStartOfStep;
     public Destination dest;
     public Step(int p, Destination d) {
-      this.current = p;
+      this.profitAtStartOfStep = p;
       dest = d;
     }
-    public int result() { return current + dest.profit; }
+    public int profitAtEndOfStep() { return profitAtStartOfStep + dest.profit; }
   }
   public int doDijkstras(int towns, int origin, int destination, String[] travelCosts, int[] profits) {
     int[] travelProfit = new int[towns];
@@ -60,9 +60,9 @@ public class SalesmansDilemma {
   }
   public void dijMove(Step step, int[] travelProfit) {
     int dest = step.dest.target;
-    if (step.result() > travelProfit[dest]) {
-      travelProfit[dest] = step.result();
-      moveAll(dest, step.result(), travelProfit);
+    if (step.profitAtEndOfStep() > travelProfit[dest]) {
+      travelProfit[dest] = step.profitAtEndOfStep();
+      moveAll(dest, step.profitAtEndOfStep(), travelProfit);
     }
   }
   // BFS
@@ -82,13 +82,13 @@ public class SalesmansDilemma {
   public void doStep(Deque<Step> toVisit, Step step, boolean[] seen, int[] profitAtTown) {
     int dest = step.dest.target;
     if (seen[dest]) { // cycle
-      if (profitAtTown[dest] < step.result()) { // cycle is profitable
+      if (profitAtTown[dest] < step.profitAtEndOfStep()) { // cycle is profitable
         endlessProfit = true;
       } else {
         // do nothing with the cycle.
       }
     } else {
-      int moneyNow = step.result();
+      int moneyNow = step.profitAtEndOfStep();
       seen[dest] = true;
       profitAtTown[dest] = moneyNow;
       for (Destination connectedTown : adjList.get(dest)) {
