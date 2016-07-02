@@ -1,9 +1,9 @@
 import java.util.*;
 public class SalesmansDilemma {
   private boolean reachable, endlessProfit;
-  private List<List<Destination>> adjList;
+  private List<List<UniDirectionalEdgeWithProfit>> adjList;
   public String bestRoute(int towns, int origin, int destination, String[] travelCosts, int[] profits) {
-    adjList = makeDestinations(towns, travelCosts, profits);
+    adjList = makeAdjacencyList(towns, travelCosts, profits);
     doBfs(towns, origin, destination, travelCosts, profits);
     String result;
     if (!reachable) {
@@ -16,30 +16,30 @@ public class SalesmansDilemma {
     }
     return result;
   }
-  public List<List<Destination>> makeDestinations(int n, String[] travelCosts, int[] profits) {
-    List<List<Destination>> adjList = new ArrayList<>();
-    for (int i = 0; i < n; i++) {  adjList.add(new ArrayList<Destination>()); }
+  public List<List<UniDirectionalEdgeWithProfit>> makeAdjacencyList(int n, String[] travelCosts, int[] profits) {
+    List<List<UniDirectionalEdgeWithProfit>> adjList = new ArrayList<>();
+    for (int i = 0; i < n; i++) {  adjList.add(new ArrayList<UniDirectionalEdgeWithProfit>()); }
     for (int i = 0; i < travelCosts.length; i++) {
       String[] split = travelCosts[i].split("\\s+");
       int source = Integer.parseInt(split[0]);
       int dest = Integer.parseInt(split[1]);
       int cost = Integer.parseInt(split[2]);
-      Destination d = new Destination(dest, profits[dest] - cost);
+      UniDirectionalEdgeWithProfit d = new UniDirectionalEdgeWithProfit(dest, profits[dest] - cost);
       adjList.get(source).add(d);
     }
     return adjList;
   }
-  public class Destination {
+  public class UniDirectionalEdgeWithProfit {
     public int target, profit;
-    public Destination(int target, int profit){
+    public UniDirectionalEdgeWithProfit(int target, int profit){
       this.target = target;
       this.profit = profit; // the money made at target - cost of travel there ## The profit of this destionation movement
     }
   }
   public class Step {
     public int profitAtStartOfStep;
-    public Destination dest;
-    public Step(int p, Destination d) {
+    public UniDirectionalEdgeWithProfit dest;
+    public Step(int p, UniDirectionalEdgeWithProfit d) {
       this.profitAtStartOfStep = p;
       dest = d;
     }
@@ -53,7 +53,7 @@ public class SalesmansDilemma {
     return travelProfit[destination];
   }
   public void moveAll(int source, int currentCash, int[] travelProfit) {
-    for (Destination dest : adjList.get(source)) {
+    for (UniDirectionalEdgeWithProfit dest : adjList.get(source)) {
       Step step = new Step(currentCash, dest);
       dijMove(step, travelProfit);
     }
@@ -71,7 +71,7 @@ public class SalesmansDilemma {
     boolean[] seen = new boolean[towns];
     int[] profitAtTown = new int[towns];
     
-    doStep(toVisit, new Step(0, new Destination(0, profits[origin])), seen, profitAtTown);
+    doStep(toVisit, new Step(0, new UniDirectionalEdgeWithProfit(0, profits[origin])), seen, profitAtTown);
     while (!toVisit.isEmpty()) {
       doStep(toVisit, toVisit.removeFirst(), seen, profitAtTown);
     }
@@ -91,7 +91,7 @@ public class SalesmansDilemma {
       int moneyNow = step.profitAtEndOfStep();
       seen[dest] = true;
       profitAtTown[dest] = moneyNow;
-      for (Destination connectedTown : adjList.get(dest)) {
+      for (UniDirectionalEdgeWithProfit connectedTown : adjList.get(dest)) {
         Step s = new Step(moneyNow, connectedTown);
         toVisit.addLast(s);
       }
