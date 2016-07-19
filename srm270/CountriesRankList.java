@@ -21,7 +21,7 @@ public class CountriesRanklist {
       int worstPosition = findVirtualPositionIfNeedleInsertedKeepingListAsSet(bestScoresListSorted, knownTotal);
       if (entry.getValue().size() < CONTESTANTS_PER_COUTRY && lowest > 0) {
         worstPosition--; 
-        /* This virtual positoin thing doesn't work because this country is in the list
+        /* This virtual position thing doesn't work because this country is in the list
         // It would work for the best list. As this country will draw with or beat its own score
         // Fails on the worst list. Because the best score this country has will be inserted there. */
       }
