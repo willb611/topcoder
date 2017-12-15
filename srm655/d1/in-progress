@@ -1,0 +1,107 @@
+SRM 655 DIV 1 HARD
+http://codeforces.com/blog/entry/17341
+
+Problem Statement
+    
+Fox Ciel is observing celestial objects in the night sky. She is interested in two types of stars: red dwarves and blue giants.  For the purpose of this problem the sky is a plane and each star is a point in the plane. Note that the constraints enforce that all points are distinct and no three points lie on the same line.  The blue giants are always visible. For each valid i, there is a blue star at (blueX[i], blueY[i]).  The red dwarves are sometimes invisible. For each valid i, there is a red star at (redX[i], redY[i]), but this star is only visible with probability (prob[i]/1000). All of those random choices are mutually independent.  Fox Ciel thinks the sky is beautiful if all blue stars are located inside the convex hull of all visible red stars. Return the probability of this event.
+Definition
+    
+Class:
+BichromeSky
+Method:
+totallyCovered
+Parameters:
+int[], int[], int[], int[], int[]
+Returns:
+double
+Method signature:
+double totallyCovered(int[] redX, int[] redY, int[] prob, int[] blueX, int[] blueY)
+(be sure your method is public)
+Limits
+    
+Time limit (s):
+2.000
+Memory limit (MB):
+256
+Stack limit (MB):
+256
+Notes
+-
+The answer will be considered correct if the absolute error or the relative error is at most 1e-9.
+Constraints
+-
+redX will contain between 3 and 100 elements, inclusive.
+-
+redX, redY and prob will contain the same number of elements.
+-
+blueX will contain between 3 and 100 elements, inclusive.
+-
+blueX and blueY will contain the same number of elements.
+-
+Each element in redX, redY, blueX and blueY will be between -1,000,000 and 1,000,000, inclusive.
+-
+Each element in prob will be between 1 and 1000, inclusive.
+-
+Among all points (blue and red), no two points will be at the same position, and no three points will be on the same line.
+Examples
+0)
+
+    
+{3,-3,0}
+{-1,-1,2}
+{400,500,600}
+{1,0,-1}
+{0,1,0}
+Returns: 0.12
+There are three blue points and up to three red points in the sky. The convex hull of all red points contains all blue points if and only if all three red points appear. The probability of that event is 0.4 * 0.5 * 0.6 = 0.12.   
+1)
+
+    
+{3,-3,3,-3}
+{3,3,-3,-3}
+{200,300,400,500}
+{0,1,-1}
+{-1,-2,-2}
+Returns: 0.088
+There are 3 cases in which the convex hull of all red points contains all blue points: {A, B, C, D}, {A, C, D}, {B, C, D}. So both C and D must appear, while at least one of {A, B} must appear. The probability is 0.4 * 0.5 * (1 - (1-0.2)*(1-0.3)) = 0.088.   
+2)
+
+    
+{3,-3,0}
+{-1,-1,2}
+{400,500,600}
+{1,0,-1,123456}
+{0,1,0,-654321}
+Returns: 0.0
+Even if we get all red points, we can't cover the blue one at (123456,-654321).
+3)
+
+    
+{0,-2,-3,-4,-3,-2,0,2,3,4,3,2}
+{4,3,2,0,-2,-3,-4,-3,-2,0,2,3}
+{501,502,503,504,505,506,507,508,509,510,511,512}
+{1,-1,-1,1}
+{1,1,-1,-1}
+Returns: 0.6555037822772468
+ 
+4)
+
+    
+{0,1,-3,3}
+{0,4,-2,-2}
+{200,300,400,500}
+{0,-1,1}
+{1,-1,-1}
+Returns: 0.06
+ 
+5)
+
+    
+{10,-17,12,-11,-13,-10,-15,14,-4,2}
+{8,17,-13,-19,-14,11,17,8,-8,-15}
+{412,360,656,876,984,160,368,873,223,128}
+{-9,-3,6,-9,-5,4,-3,10,-7,2}
+{-6,10,10,-9,-10,-6,2,-10,-9,6}
+Returns: 0.34037052019900405
+
+This problem statement is the exclusive and proprietary property of TopCoder, Inc. Any unauthorized use or reproduction of this information without the prior written consent of TopCoder, Inc. is strictly prohibited. (c)2003, TopCoder, Inc. All rights reserved.

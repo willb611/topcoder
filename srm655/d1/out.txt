@@ -1,0 +1,26 @@
+for n: 2 dp length: 100
+Added 4 for d[i]: 1
+Added 4 for d[i]: 2
+Added 12 for d[i]: 3
+Adding: 20
+00
+09
+90
+99
+00
+09
+90
+99
+00
+09
+18
+27
+36
+45
+54
+63
+72
+81
+90
+99
+20
